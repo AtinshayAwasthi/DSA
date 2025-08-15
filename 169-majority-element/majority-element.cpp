@@ -1,17 +1,27 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        //better (using hashingmap)
-        int n=nums.size();
-        map<int,int>m;
-        for(int i=0;i<n;i++)
-        {
-            m[nums[i]]++;
+        // optimal (moore's voting algo)
+        int n = nums.size();
+        int c = 0;
+        int ele;
+        for (int i = 0; i < n; i++) {
+            if (c == 0) {
+                c++;
+                ele = nums[i];
+            } else if (nums[i] == ele) {
+                c++;
+            } else {
+                c--;
+            }
         }
-        for(auto it:m)
-        {
-            if(it.second>n/2) return it.first;
+        int c1 = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == ele)
+                c1++;
         }
-        return -1;
+        if (c1 > n / 2)
+            return ele;
+        else return -1;
     }
 };
